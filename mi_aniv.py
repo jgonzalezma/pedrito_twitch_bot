@@ -1,6 +1,7 @@
 import os
 import random
 import markovify
+import asyncio
 from twitchio.ext import commands
 
 class Bot(commands.Bot):
@@ -23,10 +24,10 @@ class Bot(commands.Bot):
         )
 
         with open("chat.txt", encoding="utf-8") as f:
-                self.text = f.read()
-           
+            self.text = f.read()
+
     async def event_ready(self):
-        print(f'Logged into Twitch | {bot.nick}')
+        print(f'Logged into Twitch | {self.nick}')
 
     async def event_message(self, ctx):
         # Messages with echo set to True are messages sent by the bot...
@@ -39,16 +40,22 @@ class Bot(commands.Bot):
         # Incrementar el contador de mensajes
         self.messages_since_last_print += 1
 
-        with open("chat.txt", encoding="utf-8", mode="a") as f:
-            f.write(ctx.content + "\n")
+        """with open("chat.txt", encoding="utf-8", mode="a") as f:
+            f.write(ctx.content + "\n")"""
 
-        if self.messages_since_last_print >= random.randint(10, 15):
-            print(f"mensaje de prueba: {self.messages_since_last_print}")
+        if self.messages_since_last_print >= random.randint(1, 2):
             self.messages_since_last_print = 0
+            # Construir modelo de Markov con las palabras de longitud 1-3
             model = markovify.Text(self.text)
+            # Generar una oración
             response = model.make_sentence()
             # Verificar si el modelo de Markov está generando un mensaje
             if response:
+                # Limitar la longitud a 100 caracteres sin dividir palabras
+                if len(response) > 100:
+                    response = response[:100].rsplit(' ', 1)[0]
+                # Esperar un tiempo aleatorio entre 1 y 7 segundos
+                await asyncio.sleep(random.uniform(1, 2))
                 await ctx.channel.send(response)
             else:
                 print("El modelo de Markov no generó un mensaje.")
