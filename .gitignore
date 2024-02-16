@@ -161,3 +161,6 @@ cython_debug/
 
 /Scripts
 .secret
+chat.txt
+chat.txt
+config.secret
