@@ -10,7 +10,7 @@ Todos los cambios serán anotados en este archivo.
 - Se ha agregado un tiempo de espera cada vez que escribe el bot (entre 1 y 10 segundos en principio) para que parezca más natural.
 - Se ha limitado los mensajes para que máximo escriba 100 caracteres sin que corte palabras ya que escribía demasiado texto muchas veces.
 
-## [1.2.0] - 17-02-2024
+## [1.2.0] - 20-02-2024
 ### Added
 - Se ha agregado una probabilidad del 5% de poder saltarse el máximo de carácteres para que muy de vez en cuando, pueda escribir textos más largos.
 - Se ha agregado la función de que el bot pueda responder de vez en cuando.
